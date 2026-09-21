@@ -2,16 +2,6 @@ import { useRef } from 'react';
 import { Animated, PanResponder, Text, View, Image, Dimensions } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
-/*
-  OBS - teknik der IKKE er fra øvelsestimerne:
-  Denne komponent bruger React Natives indbyggede Animated API og PanResponder
-  til at lave det "rigtige" drag-swipe (som i Tinder/Hinge). Det er ikke noget,
-  vi har lavet i 01-04 øvelserne, men det er en del af selve React Native
-  (ikke et eksternt bibliotek), så der er ikke installeret noget ekstra for at
-  få det til at virke. Se rapportens afsnit om egne refleksioner for en kort
-  forklaring af, hvordan det virker.
-*/
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25; // hvor langt man skal trække, før det tæller som et swipe
 const SWIPE_OUT_DURATION = 250;
@@ -33,9 +23,9 @@ export default function SwipeCard({ bolig, onSwipeLeft, onSwipeRight }) {
       // Når man slipper kortet, afgør vi om det var et swipe eller ej
       onPanResponderRelease: (event, gesture) => {
         if (gesture.dx > SWIPE_THRESHOLD) {
-          forceSwipe('right'); // interesseret
+          forceSwipe('right'); // trukket mod højre = nej tak
         } else if (gesture.dx < -SWIPE_THRESHOLD) {
-          forceSwipe('left'); // nej tak
+          forceSwipe('left'); // trukket mod venstre = interesseret
         } else {
           resetPosition(); // for lidt trukket - kortet flyver tilbage til midten
         }
@@ -51,7 +41,7 @@ export default function SwipeCard({ bolig, onSwipeLeft, onSwipeRight }) {
       useNativeDriver: false,
     }).start(() => {
       position.setValue({ x: 0, y: 0 });
-      direction === 'right' ? onSwipeRight() : onSwipeLeft();
+      direction === 'right' ? onSwipeLeft() : onSwipeRight();
     });
   };
 
@@ -69,13 +59,15 @@ export default function SwipeCard({ bolig, onSwipeLeft, onSwipeRight }) {
   });
 
   // "INTERESSERET"/"NEJ TAK" labels toner gradvist frem
-  const likeOpacity = position.x.interpolate({
+  // Toner frem, når kortet trækkes mod højre (dx > 0) -> "NEJ TAK"
+  const nejTakOpacity = position.x.interpolate({
     inputRange: [0, SWIPE_THRESHOLD],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
 
-  const nopeOpacity = position.x.interpolate({
+  // Toner frem, når kortet trækkes mod venstre (dx < 0) -> "INTERESSERET"
+  const interesseretOpacity = position.x.interpolate({
     inputRange: [-SWIPE_THRESHOLD, 0],
     outputRange: [1, 0],
     extrapolate: 'clamp',
@@ -87,11 +79,11 @@ export default function SwipeCard({ bolig, onSwipeLeft, onSwipeRight }) {
 
   return (
     <Animated.View style={[GlobalStyle.card, cardStyle]} {...panResponder.panHandlers}>
-      <Animated.View style={[GlobalStyle.likeLabel, { opacity: likeOpacity }]}>
-        <Text style={GlobalStyle.likeLabelText}>INTERESSERET</Text>
+      <Animated.View style={[GlobalStyle.interesseretLabel, { opacity: interesseretOpacity }]}>
+        <Text style={GlobalStyle.interesseretLabelText}>INTERESSERET</Text>
       </Animated.View>
-      <Animated.View style={[GlobalStyle.nopeLabel, { opacity: nopeOpacity }]}>
-        <Text style={GlobalStyle.nopeLabelText}>NEJ TAK</Text>
+      <Animated.View style={[GlobalStyle.nejTakLabel, { opacity: nejTakOpacity }]}>
+        <Text style={GlobalStyle.nejTakLabelText}>NEJ TAK</Text>
       </Animated.View>
 
       <Image source={{ uri: bolig.imageUrl }} style={GlobalStyle.cardImage} />

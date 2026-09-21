@@ -1,7 +1,7 @@
 import { Pressable, Text } from 'react-native';
 import { GlobalStyle } from '../styles/GlobalStyle';
 
-// Simpel genbrugelig knap-komponent, samme princip som i 04_Styling øvelsen:
+// Simpel genbrugelig knap-komponent
 // props styrer tekst, funktion og om det er en "primary" eller "secondary" knap.
 export default function ButtonComponent({ title, onPress, type }) {
   return (

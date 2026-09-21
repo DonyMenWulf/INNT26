@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-// Samlet stylesheet for hele appen - samme princip som i 04_Styling øvelsen:
-// alt styling ligger ét sted og importeres ind i de filer, der har brug for det.
+// Samlet stylesheet for hele appen
 export const GlobalStyle = StyleSheet.create({
   // Container
   container: {
@@ -69,37 +68,132 @@ export const GlobalStyle = StyleSheet.create({
   },
 
   // "INTERESSERET" / "NEJ TAK" labels der toner frem under swipe
-  likeLabel: {
-    position: 'absolute',
-    top: 30,
-    left: 20,
-    zIndex: 10,
-    borderWidth: 3,
-    borderColor: 'green',
-    borderRadius: 6,
-    padding: 6,
-    transform: [{ rotate: '-15deg' }],
-  },
-  likeLabelText: {
-    color: 'green',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  nopeLabel: {
+  // Bemærk: swipe mod venstre = interesseret, swipe mod højre = nej tak
+  interesseretLabel: {
     position: 'absolute',
     top: 30,
     right: 20,
     zIndex: 10,
     borderWidth: 3,
-    borderColor: 'red',
+    borderColor: 'green',
     borderRadius: 6,
     padding: 6,
     transform: [{ rotate: '15deg' }],
   },
-  nopeLabelText: {
+  interesseretLabelText: {
+    color: 'green',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  nejTakLabel: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    zIndex: 10,
+    borderWidth: 3,
+    borderColor: 'red',
+    borderRadius: 6,
+    padding: 6,
+    transform: [{ rotate: '-15deg' }],
+  },
+  nejTakLabelText: {
     color: 'red',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+
+  // MatchesScreen - listen over boliger man har swipet interesseret på
+  matchList: {
+    width: '90%',
+  },
+  matchItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 12,
+    marginBottom: 12,
+    padding: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  matchImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+    marginRight: 12,
+  },
+  matchInfo: {
+    flex: 1,
+  },
+  matchTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  matchSubtitle: {
+    fontSize: 13,
+    color: 'gray',
+    marginBottom: 4,
+  },
+  matchDetails: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+
+  // ChatScreen - beskeder mellem lejer og udlejer
+  chatList: {
+    width: '90%',
+    flex: 1,
+  },
+  myBubbleContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 10,
+  },
+  theirBubbleContainer: {
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  myBubble: {
+    backgroundColor: '#2E86AB',
+    borderRadius: 16,
+    borderBottomRightRadius: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    maxWidth: '80%',
+  },
+  theirBubble: {
+    backgroundColor: '#E5E5EA',
+    borderRadius: 16,
+    borderBottomLeftRadius: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    maxWidth: '80%',
+  },
+  myBubbleText: {
+    color: 'white',
+    fontSize: 14,
+  },
+  theirBubbleText: {
+    color: 'black',
+    fontSize: 14,
+  },
+  chatInputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  chatInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    marginRight: 10,
   },
 
   // Knapper under kortet
